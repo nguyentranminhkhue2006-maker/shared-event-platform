@@ -1,0 +1,26 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+  <title>Shared calendar</title>
+</head>
+
+<body>
+  <h1>Shared calendar</h1> 
+   
+  {% if session.username %}
+  <p>
+    You are logged in as {{ session.username }}
+  </p>
+  <p>
+    <a href="/logout">Log out</a>
+  </p>
+  {% else %}
+  <p>
+    <a href="/login">Log in</a>
+    <a href="/register">Create account</a>
+  </p>
+  {% endif %}
+</body>
+
+</html>
