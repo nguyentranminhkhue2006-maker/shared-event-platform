@@ -4,6 +4,7 @@ from flask import redirect, render_template, request, session
 from werkzeug.security import generate_password_hash, check_password_hash
 import db
 import config
+from datetime import datetime
 
 app = Flask(__name__)
 app.secret_key=config.secret_key
@@ -11,6 +12,30 @@ app.secret_key=config.secret_key
 @app.route("/")
 def index():
     return render_template("index.html")
+
+@app.route("/new_event")
+def new_event():
+    return render_template("new_event.html")
+
+@app.route("/add_event", methods=["POST"])
+def add_event():
+    event_name=request.form["event_name"]
+    date_time=request.form["date_time"]
+    date_time= datetime.strptime(date_time, "%Y-%m-%dT%H:%M")
+    date_time=date_time.strftime("%Y-%m-%d %H:%M:%S")
+    print(date_time)
+    description=request.form["description"]
+    print(description)
+    user_id= session["user_id"]
+    if user_id:
+        print(user_id)
+    else:
+        print("user_id not exist")
+
+    sql = "INSERT INTO events (event_name, date_time, description, user_id) VALUES (?, ?, ?, ?)"
+    db.execute(sql, [event_name, date_time, description, user_id])
+
+    return redirect("/")
 
 @app.route("/register")
 def register():
@@ -40,11 +65,14 @@ def login():
     if request.method=="POST":
         username = request.form["username"]
         password = request.form["password"]
-        
-        sql = "SELECT password_hash FROM users WHERE username = ?"
-        password_hash = db.query(sql, [username])[0][0]
+
+        sql = "SELECT id, password_hash FROM users WHERE username = ?"
+        result= db.query(sql, [username])[0]
+        user_id = result["id"]
+        password_hash = result["password_hash"]
 
         if check_password_hash(password_hash, password):
+            session["user_id"]= user_id
             session["username"] = username
             return redirect("/")
         else:
@@ -52,5 +80,6 @@ def login():
 
 @app.route("/logout")
 def logout():
+    del session["user_id"]
     del session["username"]
     return redirect("/")

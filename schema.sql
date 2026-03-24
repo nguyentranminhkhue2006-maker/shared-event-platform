@@ -3,3 +3,11 @@ CREATE TABLE users (
     username TEXT UNIQUE,
     password_hash TEXT
 );
+
+CREATE TABLE events (
+    id INTEGER PRIMARY KEY,
+    event_name TEXT,
+    date_time TIMESTAMP,
+    description TEXT,
+    user_id INTEGER REFERENCES users
+);
