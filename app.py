@@ -5,6 +5,7 @@ from werkzeug.security import generate_password_hash, check_password_hash
 import db
 import config
 from datetime import datetime
+import events
 
 app = Flask(__name__)
 app.secret_key=config.secret_key
@@ -31,9 +32,8 @@ def add_event():
         print(user_id)
     else:
         print("user_id not exist")
-
-    sql = "INSERT INTO events (event_name, date_time, description, user_id) VALUES (?, ?, ?, ?)"
-    db.execute(sql, [event_name, date_time, description, user_id])
+    
+    events.add_event(event_name, date_time, description, user_id)
 
     return redirect("/")
 
