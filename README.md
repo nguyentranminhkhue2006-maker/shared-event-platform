@@ -1,9 +1,10 @@
-# jaettu-kalenteri
+# shared-event-platform
 
-* Käyttäjä pystyy luomaan tunnuksen ja kirjautumaan sisään sovellukseen.
-* Käyttäjä pystyy lisäämään, muokkaamaan ja poistamaan lisäämiään tapahtumia.
-* Käyttäjä näkee sovellukseen lisätyt tapahtumat: omat tapahtumat sekä kavereiden lisäämät tapahtumat.
-* Käyttäjä pystyy etsimään tapahtumia tapahtuman nimen tai muiden kriteerien perusteella.
-* Sovelluksessa on käyttäjäsivut, jotka näyttävät tilastoja ja käyttäjän lisäämät tapahtumat.
-* Käyttäjä pystyy valitsemaan tapahtumille luokittelun (esim. työ, opiskelu, harrastus)
-* Käyttäjä pystyy lisäämään kommentteja muiden käyttäjien tapahtumiin liittyen.
+* Users can create an account and log in to the application.
+* Users can create events and act as the host of those events.
+* Users can edit and delete their own events.
+* Users can view events added to the application including their own and other users' events.
+* Users can search for events by name, datetime, or other criteria.
+* The application includes user profile pages that show statistics and events created by the user.
+* Users can categorize events as work, study, leisure, networking.
+* Users can comment on events created by other users.
