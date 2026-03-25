@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+  <title>Edit event</title>
+</head>
+
+<body>
+  <h1>Edit event</h1>
+    <form action="/update_event" method="post">
+        <p>
+            Event: {{event.event_name}}
+        </p>
+        <p>
+        Date and time: <br />
+        <input type="datetime-local" name="date_time" value="{{event.date_time}}"/>
+        </p>
+        <p>
+            Description: <br />
+            <textarea name="description" rows="8" cols="30">{{event.description}}</textarea>
+        </p>
+        <input type="hidden" name="event_id" value="{{event.id}}" />
+        <input type="submit" value="Update event" />
+    </form>
+</body>
+
+</html>

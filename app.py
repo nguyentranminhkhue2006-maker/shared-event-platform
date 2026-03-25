@@ -4,7 +4,6 @@ from flask import redirect, render_template, request, session
 from werkzeug.security import generate_password_hash, check_password_hash
 import db
 import config
-from datetime import datetime
 import events
 
 app = Flask(__name__)
@@ -28,20 +27,28 @@ def new_event():
 def add_event():
     event_name=request.form["event_name"]
     date_time=request.form["date_time"]
-    date_time= datetime.strptime(date_time, "%Y-%m-%dT%H:%M")
-    date_time=date_time.strftime("%Y-%m-%d %H:%M:%S")
-    print(date_time)
     description=request.form["description"]
-    print(description)
     user_id= session["user_id"]
-    if user_id:
-        print(user_id)
-    else:
-        print("user_id not exist")
-    
+
     events.add_event(event_name, date_time, description, user_id)
 
     return redirect("/")
+
+@app.route("/edit_event/<int:event_id>")
+def edit_event(event_id):
+    event=events.get_event(event_id)
+    return render_template("edit_event.html", event=event)
+
+@app.route("/update_event", methods=["POST"])
+def update_event():
+    print(request.form)
+    event_id=request.form["event_id"]
+    date_time=request.form["date_time"]
+    description=request.form["description"]
+
+    events.update_event(event_id, date_time, description)
+
+    return redirect("/event/" + str(event_id))
 
 @app.route("/register")
 def register():
