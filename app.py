@@ -12,7 +12,13 @@ app.secret_key=config.secret_key
 
 @app.route("/")
 def index():
-    return render_template("index.html")
+    all_events= events.get_events()
+    return render_template("index.html", events=all_events)
+
+@app.route("/event/<int:event_id>")
+def show_event(event_id):
+    event=events.get_event(event_id)
+    return render_template("show_event.html",event=event)
 
 @app.route("/new_event")
 def new_event():
