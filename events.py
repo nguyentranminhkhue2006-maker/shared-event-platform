@@ -23,3 +23,7 @@ def update_event(event_id, date_time, description):
     sql="""UPDATE events SET date_time = ?, description = ?
                          WHERE id = ?"""
     db.execute(sql, [date_time, description, event_id])
+
+def cancel_event(event_id):
+    sql="DELETE FROM events WHERE id=?"
+    db.execute(sql, [event_id])

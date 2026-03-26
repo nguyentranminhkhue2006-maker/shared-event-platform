@@ -1,0 +1,18 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+  <title>Cancel event</title>
+</head>
+
+<body>
+  <h1>Cancel event</h1>
+  <p>Event: {{event.event_name}}</p>
+  <p>Do you want to cancel this event?</p>
+    <form action="/cancel_event/{{event.id}}" method="post">
+        <input type="submit" name="cancel" value="Cancel event">
+        <input type="submit" name="back" value="Go back">
+    </form>
+</body>
+
+</html>

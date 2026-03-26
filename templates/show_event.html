@@ -10,6 +10,7 @@
   {% if session.user_id == event.user_id %}
   <p>
     <a href="/edit_event/{{event.id}}">Edit</a>
+    <a href="/cancel_event/{{event.id}}">Cancel</a>
   </p>
   {% endif %}
   <p>

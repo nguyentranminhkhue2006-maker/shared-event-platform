@@ -50,6 +50,19 @@ def update_event():
 
     return redirect("/event/" + str(event_id))
 
+@app.route("/cancel_event/<int:event_id>", methods=["GET","POST"])
+def cancel_event(event_id):
+    if request.method=="GET":
+        event=events.get_event(event_id)
+        return render_template("cancel_event.html", event=event)
+
+    if request.method=="POST":
+        if "cancel" in request.form:
+            events.cancel_event(event_id)
+            return redirect("/")
+        else:
+            return redirect("/event/"+str(event_id))
+
 @app.route("/register")
 def register():
     return render_template("register.html")
