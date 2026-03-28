@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+  <title>Find event</title>
+</head>
+
+<body>
+  <h1>Find event</h1>
+   
+  <form action="/find_event" method="get">
+    <p>
+        Keyword: <input type="text" name="query" value="{{query}}">
+    </p>
+    <input type="submit" value="search">
+  </form>
+
+  {% if query %}
+  <h2>Results</h2>
+
+  <ul>
+    {% for event in results %}
+    <li>
+        <a href="/event/{{event.id}}">{{event.event_name}}</a>
+    </li>
+    {% endfor %}
+  </ul>
+  {% endif %}
+</body>
+
+</html>

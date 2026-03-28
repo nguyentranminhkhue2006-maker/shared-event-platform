@@ -14,6 +14,16 @@ def index():
     all_events= events.get_events()
     return render_template("index.html", events=all_events)
 
+@app.route("/find_event")
+def find_event():
+    query=request.args.get("query")
+    if query:
+        results=events.find_event(query)
+    else:
+        query=""
+        results=[]
+    return render_template("find_event.html", query=query, results=results)
+
 @app.route("/event/<int:event_id>")
 def show_event(event_id):
     event=events.get_event(event_id)

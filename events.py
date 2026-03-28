@@ -27,3 +27,8 @@ def update_event(event_id, date_time, description):
 def cancel_event(event_id):
     sql="DELETE FROM events WHERE id=?"
     db.execute(sql, [event_id])
+
+def find_event(query):
+    sql="""SELECT id, event_name FROM events WHERE event_name LIKE ? OR description LIKE ? ORDER BY id DESC"""
+    like="%"+query+"%"
+    return db.query(sql,[like, like])
