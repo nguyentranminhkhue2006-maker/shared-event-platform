@@ -15,7 +15,8 @@ def get_event(event_id):
     sql= """SELECT events.id, events.date_time, events.event_name, events.description, users.username, users.id user_id
             FROM events, users
             WHERE events.user_id = users.id AND events.id = ?"""
-    return db.query(sql,[event_id])[0]
+    result= db.query(sql,[event_id])
+    return result[0] if result else None
 
 def update_event(event_id, date_time, description):
     date_time= datetime.strptime(date_time, "%Y-%m-%dT%H:%M")

@@ -27,6 +27,8 @@ def find_event():
 @app.route("/event/<int:event_id>")
 def show_event(event_id):
     event=events.get_event(event_id)
+    if not event:
+        abort(404)
     return render_template("show_event.html",event=event)
 
 @app.route("/new_event")
@@ -47,6 +49,8 @@ def add_event():
 @app.route("/edit_event/<int:event_id>")
 def edit_event(event_id):
     event=events.get_event(event_id)
+    if not event:
+        abort(404)
     if event["user_id"]!=session["user_id"]:
         abort(403)
     return render_template("edit_event.html", event=event)
@@ -55,6 +59,8 @@ def edit_event(event_id):
 def update_event():
     event_id=request.form["event_id"]
     event=events.get_event(event_id)
+    if not event:
+        abort(404)
     if event["user_id"]!=session["user_id"]:
         abort(403)
 
@@ -68,6 +74,8 @@ def update_event():
 @app.route("/cancel_event/<int:event_id>", methods=["GET","POST"])
 def cancel_event(event_id):
     event=events.get_event(event_id)
+    if not event:
+        abort(404)
     if event["user_id"]!=session["user_id"]:
         abort(403)
 
