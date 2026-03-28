@@ -1,6 +1,6 @@
 import sqlite3
 from flask import Flask
-from flask import redirect, render_template, request, session
+from flask import abort, redirect, render_template, request, session
 from werkzeug.security import generate_password_hash, check_password_hash
 import db
 import config
@@ -47,12 +47,17 @@ def add_event():
 @app.route("/edit_event/<int:event_id>")
 def edit_event(event_id):
     event=events.get_event(event_id)
+    if event["user_id"]!=session["user_id"]:
+        abort(403)
     return render_template("edit_event.html", event=event)
 
 @app.route("/update_event", methods=["POST"])
 def update_event():
-    print(request.form)
     event_id=request.form["event_id"]
+    event=events.get_event(event_id)
+    if event["user_id"]!=session["user_id"]:
+        abort(403)
+
     date_time=request.form["date_time"]
     description=request.form["description"]
 
@@ -62,8 +67,11 @@ def update_event():
 
 @app.route("/cancel_event/<int:event_id>", methods=["GET","POST"])
 def cancel_event(event_id):
+    event=events.get_event(event_id)
+    if event["user_id"]!=session["user_id"]:
+        abort(403)
+
     if request.method=="GET":
-        event=events.get_event(event_id)
         return render_template("cancel_event.html", event=event)
 
     if request.method=="POST":
