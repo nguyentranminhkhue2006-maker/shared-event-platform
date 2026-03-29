@@ -7,7 +7,7 @@ def add_event(event_name, date_time, description, user_id):
     db.execute(sql, [event_name, date_time, description, user_id])
 
 def get_events():
-    sql="SELECT id, date_time, event_name FROM events WHERE date(date_time)>=date('now') ORDER BY date_time"
+    sql="SELECT id, date_time, event_name FROM events ORDER BY date_time"
     return db.query(sql)
 
 def get_event(event_id):
