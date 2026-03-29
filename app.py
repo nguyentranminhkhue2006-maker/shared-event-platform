@@ -2,6 +2,7 @@ import sqlite3
 from flask import Flask
 from flask import abort, redirect, render_template, request, session
 from werkzeug.security import generate_password_hash, check_password_hash
+from datetime import datetime, timedelta
 import db
 import config
 import events
@@ -38,14 +39,26 @@ def show_event(event_id):
 @app.route("/new_event")
 def new_event():
     require_login()
-    return render_template("new_event.html")
+    cur_date=datetime.now() + timedelta(days=1)
+    cur_date=cur_date.strftime("%Y-%m-%dT00:00")
+    return render_template("new_event.html",cur_date=cur_date)
 
 @app.route("/add_event", methods=["POST"])
 def add_event():
     require_login()
     event_name=request.form["event_name"]
+    if not event_name or len(event_name)>50:
+        abort(403)
+
     date_time=request.form["date_time"]
+    date_time= datetime.strptime(date_time, "%Y-%m-%dT%H:%M")
+    cur_date=datetime.now()+timedelta(days=1)
+    if not date_time or date_time.date()<=cur_date.date():
+        abort(403)
+
     description=request.form["description"]
+    if not description or len(description)>1000:
+        abort(403)
     user_id= session["user_id"]
 
     events.add_event(event_name, date_time, description, user_id)
@@ -60,7 +73,9 @@ def edit_event(event_id):
         abort(404)
     if event["user_id"]!=session["user_id"]:
         abort(403)
-    return render_template("edit_event.html", event=event)
+    cur_date=datetime.now() + timedelta(days=1)
+    cur_date=cur_date.strftime("%Y-%m-%dT00:00")
+    return render_template("edit_event.html", event=event, cur_date=cur_date)
 
 @app.route("/update_event", methods=["POST"])
 def update_event():
@@ -72,7 +87,14 @@ def update_event():
         abort(403)
 
     date_time=request.form["date_time"]
+    date_time= datetime.strptime(date_time, "%Y-%m-%dT%H:%M")
+    cur_date=datetime.now()+timedelta(days=1)
+    if not date_time or date_time.date()<=cur_date.date():
+        abort(403)
+
     description=request.form["description"]
+    if not description or len(description)>1000:
+        abort(403)
 
     events.update_event(event_id, date_time, description)
 

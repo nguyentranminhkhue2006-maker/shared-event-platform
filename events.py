@@ -2,7 +2,6 @@ import db
 from datetime import datetime
 
 def add_event(event_name, date_time, description, user_id):
-    date_time= datetime.strptime(date_time, "%Y-%m-%dT%H:%M")
     date_time=date_time.strftime("%Y-%m-%d %H:%M:%S")
     sql = "INSERT INTO events (event_name, date_time, description, user_id) VALUES (?, ?, ?, ?)"
     db.execute(sql, [event_name, date_time, description, user_id])
@@ -19,7 +18,6 @@ def get_event(event_id):
     return result[0] if result else None
 
 def update_event(event_id, date_time, description):
-    date_time= datetime.strptime(date_time, "%Y-%m-%dT%H:%M")
     date_time=date_time.strftime("%Y-%m-%d %H:%M:%S")
     sql="""UPDATE events SET date_time = ?, description = ?
                          WHERE id = ?"""
