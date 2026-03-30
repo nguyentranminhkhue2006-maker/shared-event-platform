@@ -1,5 +1,6 @@
 # shared-event-platform
 
+## Application's features
 * Users can create an account and log in to the application.
 * Users can create events and act as the host of those events.
 * Users can edit and delete their own events.
@@ -9,16 +10,22 @@
 * Users can categorize events as work, study, leisure, networking.
 * Users can comment on events created by other users.
 
-Sovelluksen asennus
-Asenna flask-kirjasto:
+## Installation
+Install `flask`-library:
 
+```
 $ pip install flask
+```
 
-Luo tietokannan taulut ja lisää alkutiedot:
+Create database tables and add initial data:
 
+```
 $ sqlite3 database.db < schema.sql
 $ sqlite3 database.db < init.sql
+```
 
-Voit käynnistää sovelluksen näin:
+Run application:
 
+```
 $ flask run
+```
