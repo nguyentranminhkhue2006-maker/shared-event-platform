@@ -8,3 +8,17 @@
 * The application includes user profile pages that show statistics and events created by the user.
 * Users can categorize events as work, study, leisure, networking.
 * Users can comment on events created by other users.
+
+Sovelluksen asennus
+Asenna flask-kirjasto:
+
+$ pip install flask
+
+Luo tietokannan taulut ja lisää alkutiedot:
+
+$ sqlite3 database.db < schema.sql
+$ sqlite3 database.db < init.sql
+
+Voit käynnistää sovelluksen näin:
+
+$ flask run
