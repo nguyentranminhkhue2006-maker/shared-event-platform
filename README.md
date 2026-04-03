@@ -11,6 +11,21 @@
 * Users can comment on events created by other users.
 
 ## Installation
+Clone the application:
+
+```
+$ git clone https://github.com/nguyentranminhkhue2006-maker/shared-event-platform.git
+```
+
+Create and activate the working environment:
+
+```
+$ cd shared-event-platform
+$ python3 -m venv venv
+$ source venv/bin/activate #Linux
+$ venv/bin/activate #Mac
+```
+
 Install `flask`-library:
 
 ```
