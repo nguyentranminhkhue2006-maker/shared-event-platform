@@ -24,6 +24,7 @@ $ cd shared-event-platform
 $ python3 -m venv venv
 $ source venv/bin/activate #Linux
 $ venv/bin/activate #Mac
+$ source venv/Scripts/activate #Windows
 ```
 
 Install `flask`-library:
