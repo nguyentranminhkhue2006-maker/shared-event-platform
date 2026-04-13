@@ -14,14 +14,23 @@
     <a href="/logout">Log out</a>
   </p>
   {% else %}
+  {% with messages = get_flashed_messages() %}
+  {% if messages %}
+    <ul class=flashes>
+    {% for message in messages %}
+      <li>{{ message }}</li>
+    {% endfor %}
+    </ul>
+  {% endif %}
+  {% endwith %}
   <form action="/login" method="post">
     <p>
       Username: <br />
-      <input type="text" name="username" />
+      <input type="text" name="username" maxlength="25" required/>
     </p>
     <p>
       Password: <br />
-      <input type="password" name="password" />
+      <input type="password" name="password" required/>
     </p>
     <input type="submit" value="Log in" />
   </form>

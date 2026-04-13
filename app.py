@@ -1,6 +1,6 @@
 import sqlite3
 from flask import Flask
-from flask import abort, redirect, render_template, request, session
+from flask import abort, redirect, render_template, request, session, flash
 from werkzeug.security import generate_password_hash, check_password_hash
 from datetime import datetime, timedelta
 import db
@@ -128,17 +128,26 @@ def create():
     username = request.form["username"]
     password1 = request.form["password1"]
     password2 = request.form["password2"]
+
+    if not username or len(username)>25 or not password1 or not password2:
+        flash('Invalid username or password')
+        return render_template("register.html")
     if password1 != password2:
-        return "ERROR: Passwords are not the same"
+        flash('Passwords must be the same')
+        return render_template('register.html')
     password_hash = generate_password_hash(password1)
+
 
     try:
         sql = "INSERT INTO users (username, password_hash) VALUES (?, ?)"
         db.execute(sql, [username, password_hash])
     except sqlite3.IntegrityError:
-        return "ERROR: Username is already taken"
+        flash("Username is already taken")
+        return render_template('register.html')
 
-    return "Username created"
+    flash("Account created!")
+    return redirect('/')
+    
 
 @app.route("/login", methods=["GET", "POST"])
 def login():
@@ -148,17 +157,26 @@ def login():
         username = request.form["username"]
         password = request.form["password"]
 
+        if not username or len(username)>25 or not password:
+            abort(403)
+
         sql = "SELECT id, password_hash FROM users WHERE username = ?"
-        result= db.query(sql, [username])[0]
-        user_id = result["id"]
-        password_hash = result["password_hash"]
+        result= db.query(sql, [username])
+        if not result:
+            flash("Username does not exist!")
+            return render_template('login.html')
+
+        user_id = result[0]["id"]
+        password_hash = result[0]["password_hash"]
 
         if check_password_hash(password_hash, password):
             session["user_id"]= user_id
             session["username"] = username
             return redirect("/")
-        else:
-            return "ERROR: incorrect username or password"
+
+        flash('Incorrect username or password')
+        return render_template('login.html')
+
 
 @app.route("/logout")
 def logout():
