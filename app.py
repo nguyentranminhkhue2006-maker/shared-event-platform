@@ -5,7 +5,7 @@ from werkzeug.security import generate_password_hash, check_password_hash
 from datetime import datetime, timedelta
 import db
 import config
-import events
+import events, users
 
 app = Flask(__name__)
 app.secret_key=config.secret_key
@@ -18,6 +18,14 @@ def require_login():
 def index():
     all_events= events.get_events()
     return render_template("index.html", events=all_events)
+
+@app.route("/user/<int:user_id>")
+def show_user(user_id):
+    user=users.get_user(user_id)
+    if not user:
+        abort(404)
+    events=users.get_events(user_id)
+    return render_template("show_user.html",user=user, events=events)
 
 @app.route("/find_event")
 def find_event():
