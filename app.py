@@ -41,7 +41,8 @@ def show_event(event_id):
     event=events.get_event(event_id)
     if not event:
         abort(404)
-    return render_template("show_event.html",event=event)
+    classes=events.get_classes(event_id)
+    return render_template("show_event.html",event=event, classes=classes)
 
 @app.route("/new_event")
 def new_event():
@@ -68,7 +69,12 @@ def add_event():
         abort(403)
     user_id= session["user_id"]
 
-    events.add_event(event_name, date_time, description, user_id)
+    classes=[]
+    category=request.form["category"]
+    if category:
+        classes.append(("Category", category))
+
+    events.add_event(event_name, date_time, description, user_id, classes)
 
     return redirect("/")
 

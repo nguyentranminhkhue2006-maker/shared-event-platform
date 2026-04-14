@@ -1,10 +1,20 @@
 import db
 from datetime import datetime
 
-def add_event(event_name, date_time, description, user_id):
+def add_event(event_name, date_time, description, user_id, classes):
     date_time=date_time.strftime("%Y-%m-%d %H:%M:%S")
     sql = "INSERT INTO events (event_name, date_time, description, user_id) VALUES (?, ?, ?, ?)"
     db.execute(sql, [event_name, date_time, description, user_id])
+
+    event_id= db.last_insert_id()
+
+    sql="INSERT INTO event_classes (event_id, title, value) VALUES (?,?,?)"
+    for title, value in classes:
+        db.execute(sql, [event_id,title, value])
+
+def get_classes(event_id):
+    sql="SELECT title, value FROM event_classes WHERE event_id=?"
+    return db.query(sql,[event_id])
 
 def get_events():
     sql="SELECT id, date_time, event_name FROM events ORDER BY date_time"

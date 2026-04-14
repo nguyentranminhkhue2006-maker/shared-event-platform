@@ -11,3 +11,9 @@ CREATE TABLE events (
     description TEXT,
     user_id INTEGER REFERENCES users
 );
+
+CREATE TABLE event_classes (
+    id INTEGER PRIMARY KEY,
+    event_id INTEGER REFERENCES events,
+    title TEXT
+);

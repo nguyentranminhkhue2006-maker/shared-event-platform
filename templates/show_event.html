@@ -19,6 +19,13 @@
   <p>
     Date: {{event.date_time}}
   </p>
+  {% if classes %}
+  <p>
+      {% for class in classes %}
+      {{class.title}}: {{class.value}}
+      {% endfor %}
+  </p>
+  {% endif %}
   <p>
     Description: <br />
     {{event.description}}
