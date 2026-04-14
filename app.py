@@ -47,9 +47,10 @@ def show_event(event_id):
 @app.route("/new_event")
 def new_event():
     require_login()
+    classes=events.get_all_classes()
     cur_date=datetime.now() + timedelta(days=1)
     cur_date=cur_date.strftime("%Y-%m-%dT00:00")
-    return render_template("new_event.html",cur_date=cur_date)
+    return render_template("new_event.html",cur_date=cur_date, classes=classes)
 
 @app.route("/add_event", methods=["POST"])
 def add_event():
@@ -70,9 +71,10 @@ def add_event():
     user_id= session["user_id"]
 
     classes=[]
-    category=request.form["category"]
-    if category:
-        classes.append(("Category", category))
+    for entry in request.form.getlist("classes"):
+        if entry:
+            parts=entry.split(":")
+            classes.append((parts[0],parts[1]))
 
     events.add_event(event_name, date_time, description, user_id, classes)
 

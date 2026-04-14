@@ -1,6 +1,18 @@
 import db
 from datetime import datetime
 
+def get_all_classes():
+    sql="SELECT title, value FROM classes ORDER BY id"
+    result=db.query(sql)
+
+    classes={}
+    for title, value in result:
+        if title not in classes:
+            classes[title]=[]
+        classes[title].append(value)
+
+    return classes
+
 def add_event(event_name, date_time, description, user_id, classes):
     date_time=date_time.strftime("%Y-%m-%d %H:%M:%S")
     sql = "INSERT INTO events (event_name, date_time, description, user_id) VALUES (?, ?, ?, ?)"

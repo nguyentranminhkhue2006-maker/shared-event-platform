@@ -12,8 +12,15 @@ CREATE TABLE events (
     user_id INTEGER REFERENCES users
 );
 
+CREATE TABLE classes (
+    id INTEGER PRIMARY KEY,
+    title TEXT,
+    value TEXT
+);
+
 CREATE TABLE event_classes (
     id INTEGER PRIMARY KEY,
     event_id INTEGER REFERENCES events,
-    title TEXT
+    title TEXT,
+    value TEXT
 );
