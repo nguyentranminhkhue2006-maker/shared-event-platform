@@ -71,10 +71,13 @@ def add_event():
     user_id= session["user_id"]
 
     classes=[]
+    all_classes=events.get_all_classes()
     for entry in request.form.getlist("classes"):
         if entry:
-            parts=entry.split(":")
-            classes.append((parts[0],parts[1]))
+            my_title, my_value=entry.split(":")
+            if my_title not in all_classes or my_value not in classes[my_title]:
+                abort(403)
+            classes.append((my_title,my_value))
 
     events.add_event(event_name, date_time, description, user_id, classes)
 
@@ -120,10 +123,13 @@ def update_event():
         abort(403)
 
     classes=[]
+    all_classes=events.get_all_classes()
     for entry in request.form.getlist("classes"):
         if entry:
-            parts=entry.split(":")
-            classes.append((parts[0],parts[1]))
+            my_title, my_value=entry.split(":")
+            if my_title not in all_classes or my_value not in classes[my_title]:
+                abort(403)
+            classes.append((my_title,my_value))
 
     events.update_event(event_id, date_time, description, classes)
 
