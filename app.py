@@ -90,7 +90,15 @@ def edit_event(event_id):
         abort(403)
     cur_date=datetime.now() + timedelta(days=1)
     cur_date=cur_date.strftime("%Y-%m-%dT00:00")
-    return render_template("edit_event.html", event=event, cur_date=cur_date)
+
+    all_classes=events.get_all_classes()
+    classes={}
+    for my_classes in all_classes:
+        classes[my_classes]=""
+    for entry in events.get_classes(event_id):
+        classes[entry["title"]]=entry["value"]
+
+    return render_template("edit_event.html", event=event, cur_date=cur_date, all_classes=all_classes, classes=classes)
 
 @app.route("/update_event", methods=["POST"])
 def update_event():
@@ -111,7 +119,13 @@ def update_event():
     if not description or len(description)>1000:
         abort(403)
 
-    events.update_event(event_id, date_time, description)
+    classes=[]
+    for entry in request.form.getlist("classes"):
+        if entry:
+            parts=entry.split(":")
+            classes.append((parts[0],parts[1]))
+
+    events.update_event(event_id, date_time, description, classes)
 
     return redirect("/event/" + str(event_id))
 

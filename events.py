@@ -39,11 +39,18 @@ def get_event(event_id):
     result= db.query(sql,[event_id])
     return result[0] if result else None
 
-def update_event(event_id, date_time, description):
+def update_event(event_id, date_time, description, classes):
     date_time=date_time.strftime("%Y-%m-%d %H:%M:%S")
     sql="""UPDATE events SET date_time = ?, description = ?
                          WHERE id = ?"""
     db.execute(sql, [date_time, description, event_id])
+
+    sql="DELETE FROM event_classes WHERE event_id=?"
+    db.execute(sql,[event_id])
+
+    sql="INSERT INTO event_classes (event_id, title, value) VALUES (?,?,?)"
+    for title, value in classes:
+        db.execute(sql, [event_id,title, value])
 
 def cancel_event(event_id):
     sql="DELETE FROM events WHERE id=?"
