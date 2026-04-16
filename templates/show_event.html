@@ -30,6 +30,23 @@
     Description: <br />
     {{event.description}}
   </p>
+  <h2>Comments</h2>
+  <ul>
+    {% for comment in comments %}
+    <li>
+      <article>
+        <header><a href="/user/{{comment.user_id}}">{{comment.username}}</a></header>
+        <p>{{comment.content}}</p>
+      </article>
+    </li>
+    {% endfor %}
+  </ul>
+  <h2>Write a comment</h2>
+  <form action="/add_comment" method="post">
+    <textarea name="comment" rows="4" cols="40" maxlength="300" required></textarea>
+    <input type="hidden" name="event_id" value="{{event.id}}" />
+    <input type="submit" value="Send" />
+  </form>
   <p>
     <a href="/">Back to events</a>
   </p>

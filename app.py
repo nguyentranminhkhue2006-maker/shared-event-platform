@@ -42,7 +42,9 @@ def show_event(event_id):
     if not event:
         abort(404)
     classes=events.get_classes(event_id)
-    return render_template("show_event.html",event=event, classes=classes)
+    comments=events.get_comments(event_id
+                                 )
+    return render_template("show_event.html",event=event, classes=classes, comments=comments)
 
 @app.route("/new_event")
 def new_event():
@@ -74,14 +76,31 @@ def add_event():
     all_classes=events.get_all_classes()
     for entry in request.form.getlist("classes"):
         if entry:
-            my_title, my_value=entry.split(":")
-            if my_title not in all_classes or my_value not in classes[my_title]:
+            class_title, class_value=entry.split(":")
+            if class_title not in all_classes or class_value not in classes[class_title]:
                 abort(403)
-            classes.append((my_title,my_value))
+            classes.append((class_title,class_value))
 
     events.add_event(event_name, date_time, description, user_id, classes)
 
     return redirect("/")
+
+@app.route("/add_comment", methods=["POST"])
+def add_comment():
+    require_login()
+
+    content=request.form["comment"]
+    if not content or len(content)>300:
+        abort(403)
+    event_id=request.form["event_id"]
+    event=events.get_event(event_id)
+    if not event:
+        abort(403)
+    user_id= session["user_id"]
+
+    events.add_comment(event_id, user_id, content)
+
+    return redirect("/event/"+str(event_id))
 
 @app.route("/edit_event/<int:event_id>")
 def edit_event(event_id):
@@ -126,10 +145,10 @@ def update_event():
     all_classes=events.get_all_classes()
     for entry in request.form.getlist("classes"):
         if entry:
-            my_title, my_value=entry.split(":")
-            if my_title not in all_classes or my_value not in classes[my_title]:
+            class_title, class_value=entry.split(":")
+            if class_title not in all_classes or class_value not in classes[class_title]:
                 abort(403)
-            classes.append((my_title,my_value))
+            classes.append((class_title,class_value))
 
     events.update_event(event_id, date_time, description, classes)
 

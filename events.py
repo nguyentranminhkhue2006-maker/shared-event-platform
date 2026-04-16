@@ -24,6 +24,16 @@ def add_event(event_name, date_time, description, user_id, classes):
     for title, value in classes:
         db.execute(sql, [event_id,title, value])
 
+def add_comment(event_id, user_id, content):
+    sql="INSERT INTO comments (event_id, user_id, content) VALUES (?,?,?)"
+    db.execute(sql, [event_id, user_id, content])
+
+def get_comments(event_id):
+    sql=""" SELECT comments.content, users.id user_id, users.username FROM comments, users 
+            WHERE comments.event_id=? AND comments.user_id=users.id
+            ORDER BY comments.id DESC"""
+    return db.query(sql, [event_id])
+
 def get_classes(event_id):
     sql="SELECT title, value FROM event_classes WHERE event_id=?"
     return db.query(sql,[event_id])

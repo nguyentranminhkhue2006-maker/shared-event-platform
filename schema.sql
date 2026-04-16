@@ -12,6 +12,13 @@ CREATE TABLE events (
     user_id INTEGER REFERENCES users
 );
 
+CREATE TABLE comments (
+    id INTEGER PRIMARY KEY,
+    content TEXT,
+    event_id INTEGER REFERENCES events,
+    user_id INTEGER REFERENCES users
+);
+
 CREATE TABLE classes (
     id INTEGER PRIMARY KEY,
     title TEXT,
