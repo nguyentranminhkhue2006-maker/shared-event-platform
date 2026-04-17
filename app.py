@@ -28,13 +28,21 @@ def show_user(user_id):
 
 @app.route("/find_event")
 def find_event():
+    all_classes=events.get_all_classes()
     query=request.args.get("query")
-    if query:
-        results=events.find_event(query)
+    classes={}
+    for entry in request.args.getlist("classes"):
+        if entry:
+            class_title, class_value=entry.split(":")
+            if class_title not in all_classes or class_value not in all_classes[class_title]:
+                abort(403)
+            classes[class_title]=class_value
+    if query or classes:
+        results=events.find_event(query,classes)
     else:
         query=""
         results=[]
-    return render_template("find_event.html", query=query, results=results)
+    return render_template("find_event.html", query=query, results=results, all_classes=all_classes, classes=classes)
 
 @app.route("/event/<int:event_id>")
 def show_event(event_id):
@@ -77,7 +85,7 @@ def add_event():
     for entry in request.form.getlist("classes"):
         if entry:
             class_title, class_value=entry.split(":")
-            if class_title not in all_classes or class_value not in classes[class_title]:
+            if class_title not in all_classes or class_value not in all_classes[class_title]:
                 abort(403)
             classes.append((class_title,class_value))
 
@@ -146,7 +154,7 @@ def update_event():
     for entry in request.form.getlist("classes"):
         if entry:
             class_title, class_value=entry.split(":")
-            if class_title not in all_classes or class_value not in classes[class_title]:
+            if class_title not in all_classes or class_value not in all_classes[class_title]:
                 abort(403)
             classes.append((class_title,class_value))
 

@@ -12,10 +12,25 @@
     <p>
         Keyword: <input type="text" name="query" value="{{query}}">
     </p>
+    {% for class in all_classes %}
+    <p>
+      {{class}}:
+      <select name="classes">
+        <option value="">(choose)</option>
+        {% for value in all_classes[class] %}
+        {% if classes and classes[class]==value %}
+          <option value="{{class}}:{{value}}" selected>{{value}}</option>
+        {% else %}
+          <option value="{{class}}:{{value}}">{{value}}</option>
+        {% endif %}
+        {% endfor %}
+      </select>
+    </p>
+    {% endfor %}
     <input type="submit" value="search">
   </form>
 
-  {% if query %}
+  {% if results %}
   <h2>Results</h2>
 
   <ul>
