@@ -13,30 +13,22 @@
   {% endfor %}
 
   <h1>Shared events</h1>
-   
+
   {% if session.username %}
   <p>
     You are logged in as {{ session.username }}
   </p>
-  <p>
-    <a href="/logout">Log out</a>
-  </p>
-
-  <p>
-    <a href="/new_event">New event</a>
-    <a href="/find_event">Find event</a>
-  </p>
-
-  {% else %}
-  <p>
-    <a href="/login">Log in</a>
-    <a href="/register">Create account</a>
-  </p>
-  <p>
-    <a href="/find_event">Find event</a>
-  </p>
   {% endif %}
-
+  <p>
+    <a href="/find_event">Find event</a> | 
+  {% if session.user_id %}
+    <a href="/new_event">New event</a> | 
+    <a href="/logout">Log out</a>
+  {% else %}
+    <a href="/login">Log in</a> | 
+    <a href="/register">Create account</a>
+  {% endif %}
+  </p>
   <h2>Events</h2>
 
   <ul>
