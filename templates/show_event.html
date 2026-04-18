@@ -36,7 +36,7 @@
     <li>
       <article>
         <header><a href="/user/{{comment.user_id}}">{{comment.username}}</a></header>
-        <p>{{comment.content}}</p>
+        <p>{{comment.content | show_lines}}</p>
       </article>
     </li>
     {% endfor %}

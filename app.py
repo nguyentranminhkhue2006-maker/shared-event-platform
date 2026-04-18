@@ -5,6 +5,7 @@ from datetime import datetime, timedelta
 import db
 import config
 import events, users
+import markupsafe
 
 app = Flask(__name__)
 app.secret_key=config.secret_key
@@ -92,6 +93,12 @@ def add_event():
     events.add_event(event_name, date_time, description, user_id, classes)
 
     return redirect("/")
+
+@app.template_filter()
+def show_lines(content):
+    content=str(markupsafe.escape(content))
+    content=content.replace("\n","<br />")
+    return markupsafe.Markup(content)
 
 @app.route("/add_comment", methods=["POST"])
 def add_comment():
