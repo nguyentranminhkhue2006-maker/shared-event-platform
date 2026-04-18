@@ -95,12 +95,15 @@ def add_event():
 
 @app.route("/add_comment", methods=["POST"])
 def add_comment():
-    require_login()
+    event_id=request.form["event_id"]
+    if "user_id" not in session:
+        flash("Log in to comment")
+        return redirect("/event/"+str(event_id))
 
     content=request.form["comment"]
     if not content or len(content)>300:
         abort(403)
-    event_id=request.form["event_id"]
+    #event_id=request.form["event_id"]
     event=events.get_event(event_id)
     if not event:
         abort(403)

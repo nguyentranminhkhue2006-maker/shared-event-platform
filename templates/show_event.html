@@ -42,6 +42,11 @@
     {% endfor %}
   </ul>
   <h2>Write a comment</h2>
+  {% for message in get_flashed_messages() %}
+  <p>
+    <b>{{ message }}</b>
+  </p>
+  {% endfor %}
   <form action="/add_comment" method="post">
     <textarea name="comment" rows="4" cols="40" maxlength="300" required></textarea>
     <input type="hidden" name="event_id" value="{{event.id}}" />
