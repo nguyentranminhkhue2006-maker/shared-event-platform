@@ -1,24 +1,19 @@
-<!DOCTYPE html>
-<html>
+{% extends "layout.html" %}
 
-<head>
-  <title>User {{user.username}}</title>
-</head>
+{% block title %}User {{user.username}}{% endblock %}
 
-<body>
-  <h1>User {{user.username}}</h1>
-  <p>
-    Total hosting events are {{events | count}}.
-  </p>
-  <h2>Events</h2>
-  <ul>
-    {% for event in events %}
-    <li><a href="/event/{{event.id}}">{{event.event_name}}</a></li>
-    {% endfor %}
-  </ul>
-  <p>
-    <a href="/">Back to events</a>
-  </p>
-</body>
-
-</html>
+{% block content %}
+<h2>User {{user.username}}</h2>
+<p>
+  Total hosting events: {{events | count}}
+</p>
+<h3>Events</h3>
+<ul>
+  {% for event in events %}
+  <li><a href="/event/{{event.id}}">{{event.event_name}}</a></li>
+  {% endfor %}
+</ul>
+<p>
+  <a href="/">Back to events</a>
+</p>
+{% endblock %}

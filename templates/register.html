@@ -1,34 +1,26 @@
-<!DOCTYPE html>
-<html>
+{% extends "layout.html" %}
 
-<head>
-  <title>Registration</title>
-</head>
+{% block title %}Registration{% endblock %}
 
-<body>
-  {% for message in get_flashed_messages() %}
+{% block content %}
+<h2>Create account</h2>
+
+<form action="/create" method="post">
   <p>
-    <b>{{ message }}</b>
+    Username: <br />
+    <input type="text" name="username" maxlength="25" required/>
   </p>
-  {% endfor %}
-  <form action="/create" method="post">
-    <p>
-      Username: <br />
-      <input type="text" name="username" maxlength="25" required/>
-    </p>
-    <p>
-      Password: <br />
-      <input type="password" name="password1" required/>
-    </p>
-    <p>
-      Password again: <br />
-      <input type="password" name="password2" required/>
-    </p>
-    <input type="submit" value="Create username" />
-  </form>
   <p>
-    <a href="/">Back to frontpage</a>
+    Password: <br />
+    <input type="password" name="password1" required/>
   </p>
-</body>
-
-</html>
+  <p>
+    Password again: <br />
+    <input type="password" name="password2" required/>
+  </p>
+  <input type="submit" value="Create username" />
+</form>
+<p>
+  <a href="/">Back to frontpage</a>
+</p>
+{% endblock %}

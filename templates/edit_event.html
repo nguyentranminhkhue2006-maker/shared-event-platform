@@ -1,42 +1,37 @@
-<!DOCTYPE html>
-<html>
+{% extends "layout.html" %}
 
-<head>
-  <title>Edit event</title>
-</head>
+{% block title %}Edit event{% endblock %}
 
-<body>
-  <h1>Edit event</h1>
-    <form action="/update_event" method="post">
-        <p>
-            Event: {{event.event_name}}
-        </p>
-        <p>
-            Date and time: <br />
-            <input type="datetime-local" name="date_time" min="{{cur_date}}" value="{{event.date_time}}"required/>
-        </p>
-        <p>
-            Description: <br />
-            <textarea name="description" rows="8" cols="30" maxlength="1000" required>{{event.description}}</textarea>
-        </p>
-        {% for class in all_classes %}
-        <p>
-            {{class}}: <br />
-            <select name="classes">
-                <option value="">(choose)</option>
-            {% for option in all_classes[class] %}
-            {% if classes[class] == option %}
-                <option value="{{class}}:{{option}}" selected>{{option}}</option>
-            {% else %}
-                <option value="{{class}}:{{option}}">{{option}}</option>
-            {% endif %}
-            {% endfor %}
-            </select>
-        </p>
+{% block content %}
+<h2>Edit event</h2>
+<form action="/update_event" method="post">
+    <p>
+        Event: {{event.event_name}}
+    </p>
+    <p>
+        Date and time: <br />
+        <input type="datetime-local" name="date_time" min="{{cur_date}}" value="{{event.date_time}}"required/>
+    </p>
+    <p>
+        Description: <br />
+        <textarea name="description" rows="8" cols="30" maxlength="1000" required>{{event.description}}</textarea>
+    </p>
+    {% for class in all_classes %}
+    <p>
+        {{class}}: <br />
+        <select name="classes">
+            <option value="">(choose)</option>
+        {% for option in all_classes[class] %}
+        {% if classes[class] == option %}
+            <option value="{{class}}:{{option}}" selected>{{option}}</option>
+        {% else %}
+            <option value="{{class}}:{{option}}">{{option}}</option>
+        {% endif %}
         {% endfor %}
-        <input type="hidden" name="event_id" value="{{event.id}}" />
-        <input type="submit" value="Update event" />
-    </form>
-</body>
-
-</html>
+        </select>
+    </p>
+    {% endfor %}
+    <input type="hidden" name="event_id" value="{{event.id}}" />
+    <input type="submit" value="Update event" />
+</form>
+{% endblock %}

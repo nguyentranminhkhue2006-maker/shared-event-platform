@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+  <title>{% block title %}{% endblock %}</title>
+</head>
+
+<body>
+  {% for message in get_flashed_messages() %}
+  <p>
+    <b>{{ message }}</b>
+  </p>
+  {% endfor %}
+
+  <h1>Shared events</h1>
+
+  {% if session.username %}
+  <p>
+    You are logged in as {{ session.username }}
+  </p>
+  {% endif %}
+  <p>
+    <a href="/">Homepage</a> | 
+    <a href="/find_event">Find event</a> | 
+  {% if session.user_id %}
+    <a href="/new_event">New event</a> | 
+    <a href="/logout">Log out</a>
+  {% else %}
+    <a href="/login">Log in</a> | 
+    <a href="/register">Create account</a>
+  {% endif %}
+  </p>
+
+  {% block content %}{% endblock %}
+</body>
+
+</html>

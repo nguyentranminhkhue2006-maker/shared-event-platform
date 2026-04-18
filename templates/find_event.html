@@ -1,46 +1,40 @@
-<!DOCTYPE html>
-<html>
+{% extends "layout.html" %}
 
-<head>
-  <title>Find event</title>
-</head>
+{% block title %}Find event{% endblock %}
 
-<body>
-  <h1>Find event</h1>
-   
-  <form action="/find_event" method="get">
-    <p>
-        Keyword: <input type="text" name="query" value="{{query}}">
-    </p>
-    {% for class in all_classes %}
-    <p>
-      {{class}}:
-      <select name="classes">
-        <option value="">(choose)</option>
-        {% for value in all_classes[class] %}
-        {% if classes and classes[class]==value %}
-          <option value="{{class}}:{{value}}" selected>{{value}}</option>
-        {% else %}
-          <option value="{{class}}:{{value}}">{{value}}</option>
-        {% endif %}
-        {% endfor %}
-      </select>
-    </p>
-    {% endfor %}
-    <input type="submit" value="search">
-  </form>
+{% block content %}
+<h2>Find event</h2>
+<form action="/find_event" method="get">
+  <p>
+      Keyword: <input type="text" name="query" value="{{query}}">
+  </p>
+  {% for class in all_classes %}
+  <p>
+    {{class}}:
+    <select name="classes">
+      <option value="">(choose)</option>
+      {% for value in all_classes[class] %}
+      {% if classes and classes[class]==value %}
+        <option value="{{class}}:{{value}}" selected>{{value}}</option>
+      {% else %}
+        <option value="{{class}}:{{value}}">{{value}}</option>
+      {% endif %}
+      {% endfor %}
+    </select>
+  </p>
+  {% endfor %}
+  <input type="submit" value="search">
+</form>
 
-  {% if results %}
-  <h2>Results</h2>
+{% if results %}
+<h2>Results</h2>
 
-  <ul>
-    {% for event in results %}
-    <li>
-        <a href="/event/{{event.id}}">{{event.event_name}}</a>
-    </li>
-    {% endfor %}
-  </ul>
-  {% endif %}
-</body>
-
-</html>
+<ul>
+  {% for event in results %}
+  <li>
+      <a href="/event/{{event.id}}">{{event.event_name}}</a>
+  </li>
+  {% endfor %}
+</ul>
+{% endif %}
+{% endblock %}

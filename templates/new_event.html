@@ -1,38 +1,33 @@
-<!DOCTYPE html>
-<html>
+{% extends "layout.html" %}
 
-<head>
-  <title>New event</title>
-</head>
+{% block title %}New event{% endblock %}
 
-<body>
-  <h1>New event</h1>
-    <form action="/add_event" method="post">
-        <p>
-            Event: <br />
-            <input type="text" name="event_name" maxlength="50" required/>
-        </p>
-        <p>
-        Date and time: <br />
-        <input type="datetime-local" name="date_time" min="{{cur_date}}" required/>
-        </p>
-        <p>
-            Description: <br />
-            <textarea name="description" rows="8" cols="30" maxlength="1000" required></textarea>
-        </p>
-        {% for class in classes %}
-        <p>
-            {{class}}: <br />
-            <select name="classes">
-                <option value="">(choose)</option>
-            {% for option in classes[class] %}
-                <option value="{{class}}:{{option}}">{{option}}</option>
-            {% endfor %}
-            </select>
-        </p>
+{% block content %}
+<h2>New event</h2>
+<form action="/add_event" method="post">
+    <p>
+        Event: <br />
+        <input type="text" name="event_name" maxlength="50" required/>
+    </p>
+    <p>
+    Date and time: <br />
+    <input type="datetime-local" name="date_time" min="{{cur_date}}" required/>
+    </p>
+    <p>
+        Description: <br />
+        <textarea name="description" rows="8" cols="30" maxlength="1000" required></textarea>
+    </p>
+    {% for class in classes %}
+    <p>
+        {{class}}: <br />
+        <select name="classes">
+            <option value="">(choose)</option>
+        {% for option in classes[class] %}
+            <option value="{{class}}:{{option}}">{{option}}</option>
         {% endfor %}
-        <input type="submit" value="Add event" />
-    </form>
-</body>
-
-</html>
+        </select>
+    </p>
+    {% endfor %}
+    <input type="submit" value="Add event" />
+</form>
+{% endblock %}

@@ -1,18 +1,13 @@
-<!DOCTYPE html>
-<html>
+{% extends "layout.html" %}
 
-<head>
-  <title>Cancel event</title>
-</head>
+{% block title %}Cancel event{% endblock %}
 
-<body>
-  <h1>Cancel event</h1>
-  <p>Event: {{event.event_name}}</p>
-  <p>Do you want to cancel this event?</p>
-    <form action="/cancel_event/{{event.id}}" method="post">
-        <input type="submit" name="cancel" value="Cancel event">
-        <input type="submit" name="back" value="Go back">
-    </form>
-</body>
-
-</html>
+{% block content %}
+<h2>Cancel event</h2>
+<p>Event: {{event.event_name}}</p>
+<p>Do you want to cancel this event?</p>
+  <form action="/cancel_event/{{event.id}}" method="post">
+      <input type="submit" name="cancel" value="Cancel event">
+      <input type="submit" name="back" value="Go back">
+  </form>
+{% endblock %}
