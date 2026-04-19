@@ -39,7 +39,10 @@ def get_classes(event_id):
     return db.query(sql,[event_id])
 
 def get_events():
-    sql="SELECT id, date_time, event_name FROM events ORDER BY date_time"
+    sql=""" SELECT events.id, events.date_time, events.event_name, users.id user_id, users.username
+            FROM events, users
+            WHERE events.user_id=users.id
+            ORDER BY events.date_time"""
     return db.query(sql)
 
 def get_event(event_id):

@@ -3,6 +3,7 @@
 
 <head>
   <title>{% block title %}{% endblock %}</title>
+  <link rel="stylesheet" href="/static/main.css">
 </head>
 
 <body>
@@ -12,26 +13,34 @@
   </p>
   {% endfor %}
 
-  <h1>Shared events</h1>
+  <div class="header_bar">
+    <div class="header">
+        <h1>Shared events</h1>
+    </div>
 
-  {% if session.username %}
+    <div class="nav">
+    <p>
+        <a href="/">Homepage</a> | 
+        <a href="/find_event">Find event</a> | 
+    {% if session.user_id %}
+        <a href="/new_event">New event</a> | 
+        <a href="/logout">Log out</a>
+    {% else %}
+        <a href="/login">Log in</a> | 
+        <a href="/register">Create account</a>
+    {% endif %}
+    </p>
+    </div>
+  </div>
+  <div class="container">
+    {% if session.username %}
   <p>
     You are logged in as {{ session.username }}
   </p>
   {% endif %}
-  <p>
-    <a href="/">Homepage</a> | 
-    <a href="/find_event">Find event</a> | 
-  {% if session.user_id %}
-    <a href="/new_event">New event</a> | 
-    <a href="/logout">Log out</a>
-  {% else %}
-    <a href="/login">Log in</a> | 
-    <a href="/register">Create account</a>
-  {% endif %}
-  </p>
 
   {% block content %}{% endblock %}
+  </div>
 </body>
 
 </html>

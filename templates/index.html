@@ -5,9 +5,12 @@
 {% block content %}
 <h2>Events</h2>
 
-<ul>
-  {% for event in events %}
-  <li><a href="/event/{{event.id}}">{{event.date_time}} : {{event.event_name}}</a></li>
-  {% endfor %}
-</ul>
+{% for event in events %}
+<div class="event">
+  <a href="/event/{{event.id}}">{{event.date_time}} : {{event.event_name}}</a> <br />
+  Host: <a href="/user/{{event.user_id}}">{{event.username}}</a> <br />
+  Date: {{event.date_time}}
+</div>
+{% endfor %}
+
 {% endblock %}
