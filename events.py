@@ -24,6 +24,8 @@ def add_event(event_name, date_time, description, user_id, classes):
     for title, value in classes:
         db.execute(sql, [event_id,title, value])
 
+    return event_id
+
 def add_comment(event_id, user_id, content):
     sql="INSERT INTO comments (event_id, user_id, content) VALUES (?,?,?)"
     db.execute(sql, [event_id, user_id, content])

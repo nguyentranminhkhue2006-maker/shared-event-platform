@@ -90,9 +90,9 @@ def add_event():
                 abort(403)
             classes.append((class_title,class_value))
 
-    events.add_event(event_name, date_time, description, user_id, classes)
+    event_id=events.add_event(event_name, date_time, description, user_id, classes)
 
-    return redirect("/")
+    return redirect("/event/"+str(event_id))
 
 @app.template_filter()
 def show_lines(content):
