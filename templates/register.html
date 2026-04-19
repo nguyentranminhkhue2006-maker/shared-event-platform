@@ -5,6 +5,12 @@
 {% block content %}
 <h2>Create account</h2>
 
+{% for message in get_flashed_messages() %}
+<p>
+  <b>{{ message }}</b>
+</p>
+{% endfor %}
+
 <form action="/create" method="post">
   <p>
     Username: <br />
