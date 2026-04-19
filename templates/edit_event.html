@@ -4,6 +4,9 @@
 
 {% block content %}
 <h2>Edit event</h2>
+{% for message in get_flashed_messages() %}
+<p><b>{{ message }}</b></p>
+{% endfor %}
 <form action="/update_event" method="post">
     <p>
         Event: <a href="/event/{{event.id}}">{{event.event_name}}</a>

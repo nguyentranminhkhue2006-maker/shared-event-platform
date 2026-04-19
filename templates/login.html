@@ -5,11 +5,13 @@
 {% block content %}
 <h2>Log in</h2>
 
+<div class="info">
 {% for message in get_flashed_messages() %}
 <p>
   <b>{{ message }}</b>
 </p>
 {% endfor %}
+</div>
 
 <form action="/login" method="post">
   <p>

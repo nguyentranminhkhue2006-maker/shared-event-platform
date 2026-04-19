@@ -3,11 +3,13 @@
 {% block title %}Shared events{% endblock %}
 
 {% block content %}
+<div class="info">
 {% for message in get_flashed_messages() %}
 <p>
   <b>{{ message }}</b>
 </p>
 {% endfor %}
+</div>
 
 <h2>Events</h2>
 

@@ -4,6 +4,11 @@
 
 {% block content %}
 <h2>New event</h2>
+<div class="info">
+{% for message in get_flashed_messages() %}
+<p><b>{{ message }}</b></p>
+{% endfor %}
+</div>
 <form action="/add_event" method="post">
     <p>
         Event: <br />

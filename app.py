@@ -68,17 +68,20 @@ def add_event():
     require_login()
     event_name=request.form["event_name"]
     if not event_name or len(event_name)>50:
-        abort(403)
+        flash("Invalid name")
+        return redirect("/new_event")
 
     date_time=request.form["date_time"]
     date_time= datetime.strptime(date_time, "%Y-%m-%dT%H:%M")
     cur_date=datetime.now()+timedelta(days=1)
     if not date_time or date_time.date()<=cur_date.date():
-        abort(403)
+        flash("Invalid datetime")
+        return redirect("/new_event")
 
     description=request.form["description"]
     if not description or len(description)>1000:
-        abort(403)
+        flash("Invalid description")
+        return redirect("/new_event")
     user_id= session["user_id"]
 
     classes=[]
@@ -109,8 +112,9 @@ def add_comment():
 
     content=request.form["comment"]
     if not content or len(content)>300:
-        abort(403)
-    #event_id=request.form["event_id"]
+        flash("Invalid comment")
+        return redirect("/event/"+str(event_id))
+
     event=events.get_event(event_id)
     if not event:
         abort(403)
@@ -153,11 +157,13 @@ def update_event():
     date_time= datetime.strptime(date_time, "%Y-%m-%dT%H:%M")
     cur_date=datetime.now()+timedelta(days=1)
     if not date_time or date_time.date()<=cur_date.date():
-        abort(403)
+        flash("Invalid datetime")
+        return redirect("/edit_event/"+str(event_id))
 
     description=request.form["description"]
     if not description or len(description)>1000:
-        abort(403)
+        flash("Invalid description")
+        return redirect("/edit_event/"+str(event_id))
 
     classes=[]
     all_classes=events.get_all_classes()

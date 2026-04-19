@@ -45,3 +45,7 @@ body {
   margin: 1em;
   padding: 0.2em 0.5em;
 }
+
+.info {
+  color: red;
+}
