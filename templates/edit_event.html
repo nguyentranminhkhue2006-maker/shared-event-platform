@@ -6,7 +6,7 @@
 <h2>Edit event</h2>
 <form action="/update_event" method="post">
     <p>
-        Event: {{event.event_name}}
+        Event: <a href="/event/{{event.id}}">{{event.event_name}}</a>
     </p>
     <p>
         Date and time: <br />
