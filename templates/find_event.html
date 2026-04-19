@@ -3,6 +3,7 @@
 {% block title %}Find event{% endblock %}
 
 {% block content %}
+
 <h2>Find event</h2>
 <form action="/find_event" method="get">
   <p>
@@ -27,7 +28,7 @@
 </form>
 
 {% if results %}
-<h2>Results</h2>
+<h3>Results</h3>
 
 <ul>
   {% for event in results %}

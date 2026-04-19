@@ -34,10 +34,14 @@ body {
   padding: 1em;
 }
 
+.center-page {
+  max-width: 600px;
+  margin: 0 auto;
+  text-align: center;
+}
+
 .event {
-  max-width: 600px;      /* controls box width */
-  margin: 1em auto;      /* centers horizontally */
   border: 2px solid black;
-  padding: 0.5em 1em;
-  box-sizing: border-box;
+  margin: 1em;
+  padding: 0.2em 0.5em;
 }

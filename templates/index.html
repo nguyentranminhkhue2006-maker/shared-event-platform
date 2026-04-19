@@ -5,6 +5,7 @@
 {% block content %}
 <h2>Events</h2>
 
+
 {% for event in events %}
 <div class="event">
   <a href="/event/{{event.id}}">{{event.date_time}} : {{event.event_name}}</a> <br />
